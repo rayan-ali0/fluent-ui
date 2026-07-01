@@ -109,8 +109,7 @@ export interface FileInputProps extends BaseInputProps {
   maxFileSize?: number;
   maxFilesCount?: number;
   hintText?: string;
-//   filesOnRead?: IAttachment | IAttachment[] | null;
-  filesOnRead?:  null;
+  filesOnRead?: IAttachment | IAttachment[] | null;
   onDownload?: (attachmentId: string) => void | Promise<void>;
 }
 export interface IBANInputProps extends BaseInputProps {
@@ -149,16 +148,14 @@ export interface FormInputData {
   title: string;
   regex?: Regex;
   placeholder: string;
-  value: Date | string | number | Array<string | number> | boolean | undefined | null ;
-//   value: Date | string | number | Array<string | number> | boolean | undefined | null | IAttachment | IAttachment[];
+  value: Date | string | number | Array<string | number> | boolean | undefined | null | IAttachment | IAttachment[];
   required: boolean;
   type: CustomInputType;
   fieldType?: CustomInputType;
   isDisabled: boolean;
   width: string;
   dropdownOptions?: DropdownOption[];
-//   options?: RadioOption[];
-  options?: any[];
+  options?: RadioOption[];
   hidden?: boolean;
   minDate?: Date | string | undefined;
   maxDate?: Date | string | undefined;
@@ -177,7 +174,19 @@ export interface FormInputData {
   searchPlaceholder?: string;
   isDropdownSearchable?: boolean
   onDownload?: (attachmentId: string) => void | Promise<void>;
-//   filesOnRead?: IAttachment | IAttachment[] | null;
-  filesOnRead?:   null;
+  filesOnRead?: IAttachment | IAttachment[] | null;
 }
 
+export interface IAttachment {
+    get id(): string;
+    get fileName(): string;
+    get name(): string;
+    get contentType(): string;
+    get date(): Date | undefined;
+}
+
+export interface RadioOption {
+    label: string;
+    value: string;
+    disabled?: boolean;
+}
