@@ -54,50 +54,52 @@ export const DynamicFormRenderer: FC<IDynamicFormRendererProps> = ({
                   const showFieldError = Boolean(touched?.[field.name] || submitCount > 0);
 
                   return (
-                  <>
-                    <RendererInput
-                      isDropdownSearchable={field?.isDropdownSearchable}
-                      searchPlaceholder={field?.searchPlaceholder}
-                      accept={field?.accept}
-                      maxFileSize={field.maxFileSize}
-                      maxFilesCount={field.maxFilesCount}
-                      label={field.title}
-                      value={(values as any)[field.name]}
-                      name={field.name}
-                      options={field.options || []}
-                      multiple={field.isMulti}
-                      // dropdownOptions={field.dropdownOptions || []}
-                      type={field.type as CustomInputType}
-                      placeholder={field.placeholder}
-                      onChange={(e) => {
-                        if (
-                          field.type === CustomInputType.Dropdown ||
-                          field.type === CustomInputType.Radio ||
-                          field.type === CustomInputType.Checkbox
-                        ) {
-                          setFieldTouched(field.name, true, false);
-                        }
-                        handleChange(e);
-                      }} isDisabled={field.isDisabled}
-                      required={field.required}
-                      minDate={field?.minDate}
-                      maxDate={field?.maxDate}
-                      max={field?.maxNumber}
-                      min={field?.minNumber}
-                      maxLength={field?.maxLength}
-                      minLength={field?.minLength}
-                      hintText={field?.hintText}
-                      className={field.inputClassName}
-                      errorMessage={showFieldError ? fieldError : ""}
-                      isArabic={field?.isArabic || isArabic}
-                      onDownload={field?.onDownload}
-                    // filesOnRead={field?.filesOnRead}
-                    // regex={field.regex}
-                      onBlur={handleBlur}
+                    <>
+                      <RendererInput
+                        isDropdownSearchable={field?.isDropdownSearchable}
+                        searchPlaceholder={field?.searchPlaceholder}
+                        accept={field?.accept}
+                        maxFileSize={field.maxFileSize}
+                        maxFilesCount={field.maxFilesCount}
+                        label={field.title}
+                        value={(values as any)[field.name]}
+                        name={field.name}
+                        options={field.options || []}
+                        multiple={field.isMulti}
+                        dropdownOptions={field.dropdownOptions || []}
+                        type={field.type as CustomInputType}
+                        placeholder={field.placeholder}
+                        // onChange={(e) => {
+                        //   if (
+                        //     field.type === CustomInputType.Dropdown ||
+                        //     field.type === CustomInputType.Radio ||
+                        //     field.type === CustomInputType.Checkbox
+                        //   ) {
+                        //     setFieldTouched(field.name, true, false);
+                        //   }
+                        //   handleChange(e);
+                        // }}
+                        onChange={handleChange}
+                        isDisabled={field.isDisabled}
+                        required={field.required}
+                        minDate={field?.minDate}
+                        maxDate={field?.maxDate}
+                        max={field?.maxNumber}
+                        min={field?.minNumber}
+                        maxLength={field?.maxLength}
+                        minLength={field?.minLength}
+                        hintText={field?.hintText}
+                        className={field.inputClassName}
+                        errorMessage={showFieldError ? fieldError : ""}
+                        isArabic={field?.isArabic || isArabic}
+                        onDownload={field?.onDownload}
+                        // filesOnRead={field?.filesOnRead}
+                        // regex={field.regex}
+                        onBlur={handleBlur}
 
-                    />
+                      />
 
-                  </>
+                    </>
                   );
                 }}
               </FormikConsumer>

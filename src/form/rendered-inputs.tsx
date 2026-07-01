@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { CustomInputType } from "./types";
 import {
   Button,
@@ -77,6 +77,24 @@ export function RendererInput({
       },
     } as React.ChangeEvent<HTMLInputElement>);
   };
+
+  const selectedOptionValues = useMemo(() => {
+    if (Array.isArray(value)) {
+      return value.map((item) => String(item));
+    }
+
+    if (value != null && value !== "") {
+      return [String(value)];
+    }
+
+    return [];
+  }, [value]);
+
+  const [selectedValues, setSelectedValues] = useState<string[]>(selectedOptionValues);
+
+  useEffect(() => {
+    setSelectedValues(selectedOptionValues);
+  }, [selectedOptionValues]);
 
   const buildDropdownOptions = (providedOptions: any[] = []) =>
     providedOptions.map((option, index) => ({
@@ -193,23 +211,7 @@ export function RendererInput({
     case CustomInputType.File:
       return renderField(
         <>
-          {/* <div
-                 style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: 6,
-          height: 32,
-          padding: "0 12px",
-          border: `1px solid ${errorMessage ? "#d13438" : "var(--colorNeutralStroke1)"}`,
-          borderRadius: "var(--borderRadiusMedium)",
-          backgroundColor: "var(--colorNeutralBackground1)",
-          cursor: isDisabled ? "not-allowed" : "pointer",
-          opacity: isDisabled ? 0.5 : 1,
-          fontSize: 14,
-          color: value?.length ? "var(--colorNeutralForeground1)" : "var(--colorNeutralForeground4)",
-          boxShadow: "var(--shadow2)",
-        }}
-          > */}
+
           <Button
             appearance="outline"
             icon={<Upload />}
@@ -221,7 +223,6 @@ export function RendererInput({
           >
             {value?.length ? `${value.length} file(s)` : placeholder ?? "select File"}
           </Button>
-          {/* </div> */}
           <input
             id={`file-${name}`}
             type="file"
@@ -231,6 +232,7 @@ export function RendererInput({
             multiple={multiple}
             onChange={(e) => emitValue(Array.from(e.target.files ?? []))}
             style={{ display: "none" }}
+
           />
         </>
       );
@@ -280,14 +282,13 @@ export function RendererInput({
           multiselect={Boolean(multiple)}
           appearance="outline"
           aria-invalid={!!errorMessage}
-          selectedOptions={
-            multiple
-              ? Array.isArray(value) ? value.map(String) : []
-              : value != null ? [String(value)] : []
-          }
+          selectedOptions={selectedValues}
           onOptionSelect={(_, data) => {
             const selectedOptions = data.selectedOptions ?? [];
-            emitValue(multiple ? selectedOptions : selectedOptions[0] ?? "");
+            const nextValue = multiple ? selectedOptions : selectedOptions[0] ?? "";
+
+            setSelectedValues(selectedOptions);
+            emitValue(nextValue);
           }}
           // onBlur={onBlur}
           style={{ width: "100%" }}
