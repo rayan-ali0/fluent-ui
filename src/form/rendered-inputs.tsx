@@ -12,6 +12,7 @@ import {
   Textarea,
 } from "@fluentui/react-components";
 import { Upload } from "lucide-react";
+import { tokens } from "@fluentui/react-components";
 
 export interface RendererInputProps {
   type: CustomInputType;
@@ -214,15 +215,30 @@ export function RendererInput({
 
           <Button
             appearance="outline"
-            icon={<Upload className="w-4 h-4"/>}
+            icon={<Upload className="w-4 h-4" />}
             disabled={isDisabled}
             onClick={() => document.getElementById(`file-${name}`)?.click()}
-            style={{
-              borderColor: errorMessage ? "#d13438" : undefined,
-              justifyContent: "flex-start",
-              gap: "2px",
-              width: "100%",
-            }}
+            //       style={{
+            //           border: errorMessage
+            // ? "1px solid var(--colorPaletteRedBorder2, #d13438)"
+            // : "1px solid var(--colorNeutralStroke1)",
+            //         justifyContent: "flex-start",
+            //         gap: "2px",
+            //         width: "100%",
+            //       }}
+   style={{
+    justifyContent: "flex-start",
+    gap: "2px",
+    width: "100%",
+    border: errorMessage
+      ? `1px solid ${tokens.colorPaletteRedBorder2}`
+      : `1px solid ${tokens.colorNeutralStroke1}`,
+    borderBottomColor: errorMessage
+      ? tokens.colorPaletteRedBorder2
+      : tokens.colorNeutralForeground5,
+    borderRadius: tokens.borderRadiusMedium,
+    boxShadow: "none",
+  }}
           >
             {value?.length ? `${value.length} file(s)` : placeholder ?? "Select File/s"}
           </Button>
