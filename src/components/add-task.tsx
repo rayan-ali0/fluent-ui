@@ -1,5 +1,5 @@
-import { type FC } from "react";
-import { Button, Text } from "@fluentui/react-components";
+import { useState, type FC } from "react";
+import { Button, Spinner, Text } from "@fluentui/react-components";
 import { DynamicFormWrapper } from "../form/dynamic-form-wrapper";
 import { DynamicFormRenderer } from "../form/dynamic-form-renderer";
 import { CustomInputType, type FormInputData } from "../form/types";
@@ -139,6 +139,9 @@ const exampleFields: FormInputData[] = [
 const AddTaskExample: FC = () => {
     const toasterId = useId("task-toaster");
     const { dispatchToast } = useToastController(toasterId);
+    const [loading, setLoading] = useState(false);
+
+
     return (
         <div style={{ minWidth: 500, padding: 24 }}>
             <Text size={600}>Add task example</Text>
@@ -177,8 +180,9 @@ const AddTaskExample: FC = () => {
                                 isArabic={isArabic}
                             />
 
-                            <Button appearance="primary" onClick={() => submitForm()}>
-                                Save task
+                            <Button appearance="primary" onClick={() => submitForm()}  style={{ width: 120 }}>
+                                  {loading ? <Spinner size="tiny" /> : "Save task"}
+
                             </Button>
                         </div>
                     );

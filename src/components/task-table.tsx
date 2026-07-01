@@ -13,6 +13,7 @@ import {
   DialogContent,
   DialogActions,
   Drawer,
+  Badge
 } from "@fluentui/react-components";
 
 import { Trash2, Eye } from "lucide-react";
@@ -74,17 +75,25 @@ export const TaskTable = () => {
               <TableCell>{item.name}</TableCell>
               <TableCell>{item.dateModified}</TableCell>
               <TableCell>{item.modifiedBy}</TableCell>
-              <TableCell>{item.status}</TableCell>
+              <TableCell>
+                <Badge>{item.status}</Badge>
+              </TableCell>
 
-              <TableCell style={{ display: "flex", gap: 10 }}>
-                <Trash2
-                  style={{ cursor: "pointer" }}
-                  onClick={() => setDeleteOpen(true)}
-                />
-                <Eye
-                  style={{ cursor: "pointer" }}
-                  onClick={() => setViewOpen(true)}
-                />
+              <TableCell>
+                <div className="flex flex-row gap-2">
+
+                  <Trash2
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setDeleteOpen(true)}
+                    className="w-5 h-5"
+                  />
+                  <Eye
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setViewOpen(true)}
+                    className="w-5 h-5"
+
+                  />
+                </div>
               </TableCell>
             </TableRow>
           ))}
