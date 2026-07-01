@@ -214,14 +214,17 @@ export function RendererInput({
 
           <Button
             appearance="outline"
-            icon={<Upload />}
+            icon={<Upload className="w-4 h-4"/>}
             disabled={isDisabled}
             onClick={() => document.getElementById(`file-${name}`)?.click()}
             style={{
               borderColor: errorMessage ? "#d13438" : undefined,
+              justifyContent: "flex-start",
+              gap: "2px",
+              width: "100%",
             }}
           >
-            {value?.length ? `${value.length} file(s)` : placeholder ?? "select File"}
+            {value?.length ? `${value.length} file(s)` : placeholder ?? "Select File/s"}
           </Button>
           <input
             id={`file-${name}`}
@@ -249,7 +252,7 @@ export function RendererInput({
       );
 
     case CustomInputType.Checkbox:
-      return (
+      return renderField(
         <Checkbox
           label={label}
           checked={!!value}

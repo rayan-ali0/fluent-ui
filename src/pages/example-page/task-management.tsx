@@ -4,6 +4,7 @@ import { TaskTable } from "../../components/task-table";
 import { Button, Tab, TabList, makeStyles, tokens } from "@fluentui/react-components";
 import AddTaskExample from "../../components/add-task";
 import { TaskModal } from "../../components/task-modal";
+import FAQ from "../../components/faq";
 
 const useTaskPageStyles = makeStyles({
   page: {
@@ -75,6 +76,8 @@ export const TaskPage = () => {
       </TabList>
       <TaskTable />
       <AddTaskExample/>
+      <FAQ/>
+      
       <TaskModal isOpen={isDialogOpen} setIsOpen={setIsDialogOpen} />
     </div>
   );

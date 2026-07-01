@@ -3,7 +3,14 @@ import { Button, Text } from "@fluentui/react-components";
 import { DynamicFormWrapper } from "../form/dynamic-form-wrapper";
 import { DynamicFormRenderer } from "../form/dynamic-form-renderer";
 import { CustomInputType, type FormInputData } from "../form/types";
-
+import {
+    Toaster,
+    useId,
+    useToastController,
+    Toast,
+    ToastTitle,
+} from "@fluentui/react-components";
+const isArabic = false;
 const exampleFields: FormInputData[] = [
     {
         name: "title",
@@ -14,6 +21,7 @@ const exampleFields: FormInputData[] = [
         type: CustomInputType.Text,
         isDisabled: false,
         width: "w-full",
+        isArabic
     },
     {
         name: "description",
@@ -25,8 +33,9 @@ const exampleFields: FormInputData[] = [
         isDisabled: false,
         width: "w-1/2",
         maxLength: 250,
+        isArabic
     },
-        {
+    {
         name: "Email",
         title: "Email",
         placeholder: "@gmail.com",
@@ -35,8 +44,9 @@ const exampleFields: FormInputData[] = [
         type: CustomInputType.Email,
         isDisabled: false,
         width: "w-1/2",
+        isArabic
     },
-        {
+    {
         name: "Password",
         title: "Password",
         placeholder: "...",
@@ -45,8 +55,9 @@ const exampleFields: FormInputData[] = [
         type: CustomInputType.Password,
         isDisabled: false,
         width: "w-1/2",
+        isArabic
     },
-       {
+    {
         name: "dueDate",
         title: "dueDate",
         placeholder: "select Date",
@@ -55,8 +66,9 @@ const exampleFields: FormInputData[] = [
         type: CustomInputType.Date,
         isDisabled: false,
         width: "w-1/2",
+        isArabic,
     },
-      {
+    {
         name: "time",
         title: "time",
         placeholder: "select Date",
@@ -65,17 +77,19 @@ const exampleFields: FormInputData[] = [
         type: CustomInputType.Time,
         isDisabled: false,
         width: "w-1/2",
+        isArabic,
     },
-     {
+    {
         name: "File",
         title: "File",
-        placeholder: "select File",
+        placeholder: "Select File/s",
         value: "",
         required: true,
         type: CustomInputType.File,
         isDisabled: false,
         width: "w-1/2",
-        isMulti:true
+        isArabic,
+        isMulti: true
     },
     {
         name: "priority",
@@ -86,13 +100,14 @@ const exampleFields: FormInputData[] = [
         type: CustomInputType.Dropdown,
         isDisabled: false,
         width: "w-1/2",
+        isArabic,
         options: [
             { label: "Low", value: "low" },
             { label: "Medium", value: "medium" },
             { label: "High", value: "high" },
         ],
     },
-     {
+    {
         name: "status",
         title: "Status",
         placeholder: "Select satts",
@@ -106,6 +121,7 @@ const exampleFields: FormInputData[] = [
             { label: "Completed", value: "Completed" },
             { label: "Pending", value: "Pending" },
         ],
+        isArabic
     },
     {
         name: "isDone",
@@ -116,10 +132,13 @@ const exampleFields: FormInputData[] = [
         type: CustomInputType.Checkbox,
         isDisabled: false,
         width: "w-full",
+        isArabic
     },
 ];
 
 const AddTaskExample: FC = () => {
+    const toasterId = useId("task-toaster");
+    const { dispatchToast } = useToastController(toasterId);
     return (
         <div style={{ minWidth: 500, padding: 24 }}>
             <Text size={600}>Add task example</Text>
@@ -128,8 +147,18 @@ const AddTaskExample: FC = () => {
                 formName="add-task-example"
                 handleOnSubmitValues={(values) => {
                     console.log("submitted values", values);
+                    dispatchToast(
+                        <Toast>
+                            <ToastTitle>Data saved successfully!</ToastTitle>
+                        </Toast>,
+                        {
+                            intent: "success",
+                            timeout: 3000,
+
+                        }
+                    );
                 }}
-                isArabic={false}
+                isArabic={isArabic}
             >
                 {(formikProps: any) => {
                     const { values, submitForm } = formikProps;
@@ -145,7 +174,7 @@ const AddTaskExample: FC = () => {
                                         formikProps.setFieldValue(target.name, target.value);
                                     }
                                 }}
-                                isArabic={false}
+                                isArabic={isArabic}
                             />
 
                             <Button appearance="primary" onClick={() => submitForm()}>
@@ -155,6 +184,8 @@ const AddTaskExample: FC = () => {
                     );
                 }}
             </DynamicFormWrapper>
+            <Toaster toasterId={toasterId} />
+
         </div>
     );
 };
